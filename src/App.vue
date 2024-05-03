@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import {login} from '@/api/user'
-login({username:"1234",password:"21345"});
 </script>
-
 <template>
+  <div class="vab-theme-white">
   <router-view></router-view>
+</div>
 </template>
 

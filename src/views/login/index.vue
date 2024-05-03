@@ -11,19 +11,12 @@
             欢迎来到
           </div>
           <el-form-item prop="username" style="margin-top: 40px">
-            <el-input placeholder="请输入用户名" v-model="form.username"  tabindex="1"
-              type="text"></el-input>
+            <el-input placeholder="请输入用户名" v-model="form.username" tabindex="1" type="text"></el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input placeholder="请输入密码" tabindex="2" v-model="form.password"
-              type="password"></el-input>
+            <el-input placeholder="请输入密码" tabindex="2" v-model="form.password" type="password"></el-input>
           </el-form-item>
-          <el-button
-            class="login-btn"
-            type="primary"
-            :loading="state.loading"
-            @click="handleLogin(formRef)"
-          >
+          <el-button class="login-btn" type="primary" :loading="state.loading" @click="handleLogin(formRef)">
             登录
           </el-button>
         </el-form>
@@ -36,17 +29,22 @@
 </template>
 <script lang="ts" setup>
 import router from '@/router';
+import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/modules/user';
 import { reactive, ref } from 'vue';
-import type { FormInstance,FormRules } from 'element-plus'
+
+import type { FormInstance, FormRules } from 'element-plus'
 import { isPassword } from '@/utils/validate';
 
 const formRef = ref<FormInstance>();
-const {login,getToken} = useUserStore();
+const { login, getToken } = useUserStore();
 
-interface form{
-  username:string,
-  password:string
+const $router = useRouter();
+const $route = useRoute();
+
+interface form {
+  username: string,
+  password: string
 }
 
 let state = reactive({
@@ -54,8 +52,8 @@ let state = reactive({
 })
 
 let form = reactive<form>({
-  username:'123',
-  password:'123456'
+  username: '123',
+  password: '123456'
 });
 
 // 校验
@@ -89,16 +87,18 @@ const handleLogin = (formEl: FormInstance | undefined) => {
   formEl.validate(async (valid) => {
     if (valid) {
       try {
-      state.loading = true
+        state.loading = true
         await login({
           username: form.username,
           password: form.password
         })
+        let redirect:any = $route.query.redirect;
         router.replace({
-          name: 'home'
+          path: redirect || '/'
         })
       }
-      finally {         state.loading = false
+      finally {
+        state.loading = false
       }
     }
   })

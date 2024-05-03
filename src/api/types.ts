@@ -1,5 +1,5 @@
-//登录后返回的类型
-export interface menuResponseData {
+//用户信息
+export interface responseData {
   code: number;
   result: any;
   success: boolean;

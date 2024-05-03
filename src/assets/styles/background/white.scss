@@ -2,7 +2,7 @@
  * @description 白
  */
 
-body.vab-theme-white {
+.vab-theme-white {
   $base-menu-background: #fff;
 
   @mixin container {
@@ -119,11 +119,7 @@ body.vab-theme-white {
     }
   }
 
-  .vab-layout-float,
-  .vab-layout-common,
-  .vab-layout-vertical,
-  .vab-layout-horizontal,
-  .vab-layout-comprehensive {
+  .layout_container {
     .el-menu {
       @include container;
 

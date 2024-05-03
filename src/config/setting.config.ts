@@ -27,7 +27,7 @@ export default {
   // 消息框消失时间
   messageDuration: 3000,
   // 是否开启登录拦截
-  loginInterception: false,
+  loginInterception: true,
   // 是否开启登录RSA加密
   loginRSA: false,
   // intelligence(前端导出路由)和 all(后端导出路由)两种方式

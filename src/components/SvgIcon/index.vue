@@ -9,7 +9,10 @@
       type: String,
       default: '#icon-',
     },
-    name: String,
+    name: {
+      type:String,
+      required:true
+    },
     color: String,
   });
   </script>
