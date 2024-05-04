@@ -39,7 +39,7 @@ import { isPassword } from '@/utils/validate';
 const formRef = ref<FormInstance>();
 const { login, getToken } = useUserStore();
 
-const $router = useRouter();
+
 const $route = useRoute();
 
 interface form {

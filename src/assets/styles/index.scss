@@ -1,11 +1,11 @@
 /**
  * @description 全局样式
  */
- @import "./commit.scss";
-@import "./loading.scss";
-@import "./normalize.scss";
-@import "./transition.scss";
-@import "./background/white.scss";
+@import './commit.scss';
+@import './loading.scss';
+@import './normalize.scss';
+@import './transition.scss';
+@import './background/white.scss';
 
 @mixin base-scrollbar {
   &::-webkit-scrollbar {
@@ -23,7 +23,7 @@
 }
 
 .vab-layout-header,
-[class*="-bar-container"] {
+[class*='-bar-container'] {
   transition: $base-transition;
 
   * {
@@ -33,13 +33,13 @@
 
 html {
   body,
-  body[class*="vab-theme-"] {
+  body[class*='vab-theme-'] {
     position: relative;
     box-sizing: border-box;
     height: 100vh;
     padding: 0;
     overflow: hidden;
-    font-family: "PingFang SC", Arial, "Microsoft YaHei", sans-serif;
+    font-family: 'PingFang SC', Arial, 'Microsoft YaHei', sans-serif;
     font-size: $base-font-size-default;
     color: var(--el-color-black);
     background: $base-color-background;
@@ -51,7 +51,7 @@ html {
       overflow: auto;
       @include base-scrollbar;
 
-      .vab-main {
+      .layout_main {
         transition: $base-transition;
 
         .vab-app-main {
@@ -64,7 +64,7 @@ html {
             background: var(--el-color-white);
             transition: $base-transition;
 
-            > [class*="-container"] {
+            > [class*='-container'] {
               min-height: $base-keep-alive-height;
               padding: $base-padding;
               background: var(--el-color-white);
@@ -81,7 +81,7 @@ html {
       @include base-scrollbar;
     }
 
-    [class*="ri-"] {
+    [class*='ri-'] {
       vertical-align: -3px !important;
     }
 
@@ -95,7 +95,7 @@ html {
     img {
       object-fit: cover;
 
-      &[src=""],
+      &[src=''],
       &:not([src]) {
         opacity: 0;
       }
@@ -236,7 +236,7 @@ html {
         border-radius: var(--el-border-radius-circle);
       }
 
-      [class*="ri-"] {
+      [class*='ri-'] {
         margin-right: 3px;
         font-size: 12px;
         vertical-align: -1.8px;
@@ -246,7 +246,7 @@ html {
         font-size: 12px;
       }
 
-      [class*="el-icon-"] + span {
+      [class*='el-icon-'] + span {
         margin-left: 3px;
       }
     }
@@ -429,7 +429,8 @@ html {
       }
 
       .peg {
-        box-shadow: 0 0 10px var(--el-color-primary),
+        box-shadow:
+          0 0 10px var(--el-color-primary),
           0 0 5px var(--el-color-primary);
       }
     }
@@ -484,6 +485,11 @@ html {
           margin-left: 3px;
         }
       }
+    }
+
+    .el-dialog__body {
+      padding: calc(var(--el-dialog-padding-primary) + 10px)
+        var(--el-dialog-padding-primary);
     }
 
     /* el-dialog、el-message-box、el-popover */

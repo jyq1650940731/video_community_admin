@@ -12,13 +12,19 @@
             <layout-nav></layout-nav>
         </div>
         <div class="layout_main" :class="{ 'is-collapse': userStore.isCollapse }">
-            <router-view v-slot="{ Component }">
-                <component :is="Component" v-if="isflag"></component>
-            </router-view>
+            <div class="vab-app-main">
+                <section>
+                    <router-view v-slot="{ Component }">
+                        <component :is="Component" v-if="isflag"></component>
+                    </router-view>
+                </section>
+                <foot></foot>
+            </div>
         </div>
     </div>
 </template>
 <script lang='ts' setup name="Layout">
+import foot from './layoutFoot/index.vue';
 import logo from './logo/index.vue';
 import layoutMenu from './layoutMenu/index.vue';
 import layoutNav from './layoutNav/index.vue';
@@ -127,6 +133,7 @@ const isflag = ref(true);
     box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
     color: var(--el-text-color-regular);
     transition: $base-transition;
+    z-index: 99;
 
     &.is-collapse {
         width: calc(100% - $base-left-menu-width-min);
@@ -141,6 +148,7 @@ const isflag = ref(true);
     left: $base-left-menu-width ;
     top: $base-nav-height ;
     transition: $base-transition;
+    overflow: auto;
 
     &.is-collapse {
         width: calc(100% - $base-left-menu-width-min);

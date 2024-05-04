@@ -10,7 +10,6 @@ import 'element-plus/theme-chalk/el-message.css';
 import 'element-plus/es/components/notification/style/css';
 import 'element-plus/theme-chalk/el-message-box.css';
 import '@/router/permissions';
-
 import GlobalComponents from '@/components/index';
 
 const app = createApp(App);
