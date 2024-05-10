@@ -1,12 +1,12 @@
 import request from '@/utils/request';
-import type { menuResponseData } from './type';
+import type { responseData } from '@/types/api';
 
 enum API {
   MENU_URL = '/router/menu',
 }
 
 export const getMenu = () =>
-  request<any, menuResponseData>({
+  request<any, responseData>({
     url: API.MENU_URL,
     method: 'get',
   });

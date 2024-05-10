@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
-import { getMenu } from '@/api/router/index';
-import { configRoutes } from '@/router/route';
+import { getMenu } from '@/api/router';
+import { constantRoutes } from '@/router/route';
 import type { RouteRecordRaw } from 'vue-router';
 import router from '@/router';
 const modules = import.meta.glob('@/views/**/*.vue');
@@ -22,6 +22,8 @@ export const useRouterStore = defineStore('router', () => {
           ? (route.component = () => import('@/layout/index.vue'))
           : (route.component = modules[`/src/${route.component}/index.vue`]);
       }
+
+      
       if (route.children) convertRouter(route.children);
     });
   };
@@ -31,7 +33,7 @@ export const useRouterStore = defineStore('router', () => {
     routers.forEach((route: any) => {
       router.addRoute(route);
     });
-    configRoutes.forEach((route: any) => {
+    constantRoutes.forEach((route: any) => {
       router.addRoute(route);
     });
   };

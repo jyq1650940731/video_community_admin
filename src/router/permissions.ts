@@ -10,6 +10,7 @@ router.beforeEach(async (to, from, next) => {
   nprogress.start();
   const { token, username, getUserInfo } = useUserStore();
   const { getRouteList, routeList } = useRouterStore();
+
   if (token) {
     // 禁止已登录用户返回登录页
     if (to.path === '/login') {
@@ -52,9 +53,3 @@ router.afterEach((to, from) => {
   // to and from are both route objects.
   nprogress.done();
 });
-function RouteRecordName(
-  name: import('vue-router').RouteRecordName | null | undefined,
-  RouteRecordName: any,
-): any {
-  throw new Error('Function not implemented.');
-}

@@ -29,30 +29,26 @@
 </template>
 <script lang="ts" setup>
 import router from '@/router';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useUserStore } from '@/stores/modules/user';
 import { reactive, ref } from 'vue';
 
 import type { FormInstance, FormRules } from 'element-plus'
 import { isPassword } from '@/utils/validate';
+import { loginForm } from '@/types/request';
 
 const formRef = ref<FormInstance>();
-const { login, getToken } = useUserStore();
+const { login } = useUserStore();
 
 
 const $route = useRoute();
 
-interface form {
-  username: string,
-  password: string
-}
-
-let state = reactive({
+const state = reactive({
   loading: false
 })
 
-let form = reactive<form>({
-  username: '123',
+const form = reactive<loginForm>({
+  username: 'admin12',
   password: '123456'
 });
 
@@ -103,7 +99,6 @@ const handleLogin = (formEl: FormInstance | undefined) => {
     }
   })
 }
-
 </script>
 <style scoped lang="scss">
 .login-container {

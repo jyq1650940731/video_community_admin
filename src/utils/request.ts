@@ -2,7 +2,7 @@ import { useUserStore } from '@/stores/modules/user';
 import config from '@/config';
 import axios from 'axios';
 import { ElMessageBox } from 'element-plus';
-const { statusName, tokenTableName } = config;
+const { tokenTableName, tokenFail } = config;
 
 const request = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
@@ -23,10 +23,13 @@ let isRefreshing = false;
 //拦截响应
 request.interceptors.response.use(
   (response: any) => {
-    const { data, status } = response;
-    const code = data && data[statusName] ? data[statusName] : status;
-
-    if (code === 1001) {
+    const {
+      data: { code },
+      status,
+    } = response;
+    // const code = data && data[statusName] ? data[statusName] : status;
+    //token失效处理
+    if (code === tokenFail) {
       if (isRefreshing) return Promise.reject(response);
       isRefreshing = true;
       ElMessageBox.confirm(
@@ -45,6 +48,10 @@ request.interceptors.response.use(
         });
       return Promise.reject(response);
     }
+    // if (code == stateFail){
+    //   console.log("失败");
+    // }
+
     return response.data;
   },
   (error: any) => {

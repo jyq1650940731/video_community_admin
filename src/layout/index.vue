@@ -34,6 +34,8 @@ import { ref } from 'vue';
 const { routeList } = useRouterStore();
 const userStore = useUserStore();
 const isflag = ref(true);
+console.log(routeList);
+
 
 </script>
 <style lang='scss' scoped>

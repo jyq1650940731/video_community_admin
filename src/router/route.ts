@@ -19,27 +19,14 @@ const constantRoutes: Array<RouteRecordRaw> = [
       hidden: true,
     },
   },
-];
-
-const configRoutes: Array<RouteRecordRaw> = [
-  // {
-  //   path: '/:pathMatch(.*)*',
-  //   redirect: '/404',
-  //   name: 'any',
-  //   meta: {
-  //     title: 'any',
-  //     hidden: true,
-  //   },
-  // },
   {
     path: '/',
     name: 'layout',
-    redirect: 'index/home',
+    redirect: 'main/vc',
     meta: {
       title: 'layout',
       hidden: true,
     },
   },
 ];
-
-export { constantRoutes, configRoutes };
+export { constantRoutes };

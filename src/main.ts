@@ -12,8 +12,11 @@ import 'element-plus/theme-chalk/el-message-box.css';
 import '@/router/permissions';
 import GlobalComponents from '@/components/index';
 
+
 const app = createApp(App);
-app.use(router);
+if(router){
+    app.use(router);
+}
 app.use(pinia);
 app.use(GlobalComponents);
 app.mount('#app');

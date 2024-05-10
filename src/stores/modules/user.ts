@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, computed, type ComputedRef } from 'vue';
-import { type loginForm } from '@/api/user/type';
+import { type loginForm } from '@/types/request';
 import { getUserInfo as userInfo, login as loginApi } from '@/api/user';
 import {
   getToken as getTokenApi,
@@ -77,18 +77,19 @@ export const useUserStore = defineStore('user', () => {
 
   const login = async (userInfo: loginForm) => {
     const { message, result } = await loginApi(userInfo);
-    if (!result.token) {
+    if (!result) {
       ElNotification({
         message: message,
         type: 'error',
       });
       return Promise.reject(new Error(message));
     }
-    afterLogin(result.token);
+    afterLogin(result);
     return 'ok';
   };
 
   const userLogout = () => {
+    console.log(router.currentRoute.value.fullPath);
     token.value = '';
     username.value = '';
     avatar.value = '';
@@ -114,7 +115,7 @@ export const useUserStore = defineStore('user', () => {
       if (username) setUsername(username);
       // 如不使用avatar头像,可删除以下代码
       if (avatar) setAvatar(avatar);
-      return 'ok'; 
+      return 'ok';
     }
   };
 

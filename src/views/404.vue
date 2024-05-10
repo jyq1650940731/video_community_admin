@@ -5,7 +5,7 @@ import { onBeforeRouteLeave, useRouter } from 'vue-router'
 const router = useRouter()
 let timer: any
 const state = reactive({
-    jumpTime: 100,
+    jumpTime: 5,
     oops: '抱歉!',
     headline: '当前页面不存在...',
     info: '请检查您输入的网址是否正确，或点击下面的按钮返回首页。',

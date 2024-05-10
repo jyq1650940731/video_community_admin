@@ -16,7 +16,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
   // process.cwd(): index根目录
   // env:获取当前环境下信息
   let env = loadEnv(mode, process.cwd());
-
+  console.log(env);
   return {
     plugins: [
       vue(),
@@ -52,10 +52,15 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       },
     },
     server: {
+      //用来配置跨域
+      host: 'localhost',
+      port: 5173,
       proxy: {
-        target: env.VITE_USER_NODE_ENV,
-        // changeOrigin:true,
-        // rewrite:
+        '/dev-api': {
+          target: env.VITE_SERVE,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/dev-api/, ''),
+        },
       },
     },
   };
