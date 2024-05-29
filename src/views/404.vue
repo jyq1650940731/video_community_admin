@@ -23,7 +23,7 @@ const timeChange = () => {
     }, 1000)
 }
 onBeforeRouteLeave((to, from, next) => {
-    clearInterval(state.jumpTime)
+    clearInterval(timer)
     next()
 })
 onBeforeMount(() => {

@@ -3,7 +3,7 @@
         <div class="layout_slider" :class="{ 'is-collapse': userStore.isCollapse }">
             <logo></logo>
             <el-scrollbar class="vab-side-bar">
-                <el-menu :default-active="$route.path" :collapse="userStore.isCollapse">
+                <el-menu :default-active="$route.meta.path" :collapse="userStore.isCollapse">
                     <layout-menu :menuList="routeList"></layout-menu>
                 </el-menu>
             </el-scrollbar>
@@ -29,14 +29,19 @@ import logo from './logo/index.vue';
 import layoutMenu from './layoutMenu/index.vue';
 import layoutNav from './layoutNav/index.vue';
 import { useRouterStore } from '@/stores/modules/router';
-import { useUserStore } from '@/stores/modules/user'
-import { ref } from 'vue';
+import { useLayoutStore } from '@/stores/modules/layout';
+import { useUserStore } from '@/stores/modules/user';
+import { nextTick, ref, watch } from 'vue';
 const { routeList } = useRouterStore();
+const useLayout = useLayoutStore();
 const userStore = useUserStore();
 const isflag = ref(true);
-console.log(routeList);
-
-
+watch(()=>useLayout.refsh,()=>{
+    isflag.value = false;
+    nextTick(()=>{
+        isflag.value = true
+    })
+})
 </script>
 <style lang='scss' scoped>
 @mixin active {

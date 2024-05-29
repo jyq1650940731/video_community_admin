@@ -1,4 +1,5 @@
 <template>
+    
     <div class="user-management-container">
         <vab-query-form>
             <vab-query-form-left-panel :span="12">
@@ -76,7 +77,6 @@ const { statusSuccess } = config;
 
 const editRef = ref();
 
-const layout = 'total, sizes, prev, pager, next, jumper';
 const listLoading = ref(false);
 const userTotal = ref(0)
 let userList = reactive(['']);

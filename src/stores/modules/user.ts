@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed, type ComputedRef } from 'vue';
-import { type loginForm } from '@/types/request';
-import { getUserInfo as userInfo, login as loginApi } from '@/api/user';
+import type { loginForm } from '@/types/request';
+import { getUserInfo as userInfo, login as loginApi, logout } from '@/api/user';
 import {
   getToken as getTokenApi,
   removeToken,
@@ -15,7 +15,7 @@ import router from '@/router';
 export const useUserStore = defineStore('user', () => {
   //state
   const token = ref(getTokenApi() as string);
-  const username = ref('');
+  const nickname = ref('');
   const avatar = ref('');
   const isCollapse = ref(false);
 
@@ -23,8 +23,8 @@ export const useUserStore = defineStore('user', () => {
   const getToken = computed(() => {
     return token.value;
   });
-  const getUsername = computed(() => {
-    return username.value;
+  const getnickname = computed(() => {
+    return nickname.value;
   });
   const getAvatar = computed(() => {
     return avatar.value;
@@ -42,10 +42,10 @@ export const useUserStore = defineStore('user', () => {
 
   /**
    * @description 设置用户名
-   * @param {*} username
+   * @param {*} nickname
    */
-  const setUsername = (u: string) => {
-    username.value = u;
+  const setnickname = (u: string) => {
+    nickname.value = u;
   };
   /**
    * @description 设置头像
@@ -84,14 +84,14 @@ export const useUserStore = defineStore('user', () => {
       });
       return Promise.reject(new Error(message));
     }
-    afterLogin(result);
+    afterLogin(result.token);
     return 'ok';
   };
 
-  const userLogout = () => {
-    console.log(router.currentRoute.value.fullPath);
+  const userLogout = async () => {
+    await logout();
     token.value = '';
-    username.value = '';
+    nickname.value = '';
     avatar.value = '';
     removeToken();
     router.push({
@@ -104,28 +104,28 @@ export const useUserStore = defineStore('user', () => {
 
   const getUserInfo = async () => {
     const {
-      result: { username, avatar },
+      result: { nikename, avatarUrl },
     } = await userInfo();
-    if ((username && !isString(username)) || (avatar && !isString(avatar))) {
+    if ((nikename && !isString(nikename)) || (avatarUrl && !isString(avatarUrl))) {
       const err = 'getUserInfo核心接口异常，请检查返回JSON格式是否正确';
       ElMessage.error(err);
       throw err;
     } else {
-      // 如不使用username用户名,可删除以下代码
-      if (username) setUsername(username);
+      // 如不使用nickname用户名,可删除以下代码
+      if (nickname) setnickname(nikename);
       // 如不使用avatar头像,可删除以下代码
-      if (avatar) setAvatar(avatar);
+      if (avatar) setAvatar(avatarUrl);
       return 'ok';
     }
   };
 
   return {
     token,
-    username,
+    nickname,
     avatar,
     isCollapse,
     getToken,
-    getUsername,
+    getnickname,
     getAvatar,
     login,
     userLogout,

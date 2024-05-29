@@ -6,16 +6,12 @@ import App from './App.vue';
 import 'virtual:svg-icons-register';
 import router from './router';
 import pinia from './stores';
-import 'element-plus/theme-chalk/el-message.css';
-import 'element-plus/es/components/notification/style/css';
-import 'element-plus/theme-chalk/el-message-box.css';
 import '@/router/permissions';
 import GlobalComponents from '@/components/index';
 
-
 const app = createApp(App);
-if(router){
-    app.use(router);
+if (router) {
+  app.use(router);
 }
 app.use(pinia);
 app.use(GlobalComponents);

@@ -1,3 +1,12 @@
+/*
+ * @Author: YourName
+ * @Date: 2024-04-22 15:29:04
+ * @LastEditTime: 2024-05-29 14:14:42
+ * @LastEditors: YourName
+ * @Description: 
+ * @FilePath: \video_community_admin\src\utils\token.ts
+ * 版权声明
+ */
 
 import config from '@/config'
 const {storage,tokenTableName} = config;
@@ -6,7 +15,7 @@ const {storage,tokenTableName} = config;
 /**
  * @description 获取token
  * @returns {string|ActiveX.IXMLDOMNode|Promise<any>|any|IDBRequest<any>|MediaKeyStatus|FormDataEntryValue|Function|Promise<Credential | null>}
- */
+*/
 
 export function getToken() {
   if (storage) {

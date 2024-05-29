@@ -10,6 +10,10 @@ import path from 'path';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import {
+  createStyleImportPlugin,
+  ElementPlusResolve,
+} from 'vite-plugin-style-import';
 
 // https://vitejs.dev/config/
 export default ({ command, mode }: ConfigEnv): UserConfigExport => {
@@ -35,6 +39,18 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       Components({
         resolvers: [ElementPlusResolver()],
       }),
+      createStyleImportPlugin({
+        resolves: [ElementPlusResolve()],
+        libs: [
+          {
+            libraryName: 'element-plus',
+            esModule: true,
+            resolveStyle: (name) => {
+              return `element-plus/theme-chalk/${name}.css`;
+            },
+          },
+        ],
+      }),
     ],
     resolve: {
       alias: {
@@ -46,8 +62,9 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData:
-            '@use "sass:math";@import "@/assets/styles/variables/variables.module.scss";',
+          additionalData: `@use "sass:math";
+          @import "@/assets/styles/variables/variables.module.scss";
+          `,
         },
       },
     },

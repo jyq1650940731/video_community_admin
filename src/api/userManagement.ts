@@ -1,3 +1,12 @@
+/*
+ * @Author: YourName
+ * @Date: 2024-05-10 22:50:23
+ * @LastEditTime: 2024-05-23 11:26:18
+ * @LastEditors: YourName
+ * @Description: 
+ * @FilePath: \video_community_admin\src\api\userManagement.ts
+ * 版权声明
+ */
 import request from '@/utils/request';
 import type { addUserData, responseData, updataUserData } from '@/types/api';
 
@@ -27,8 +36,8 @@ export const updataUser = (data: updataUserData) =>
     data,
   });
 
-export const removeUser = (id: string) =>
+export const removeUser = (ids: string) =>
   request<any, responseData>({
-    url: API.LIST_URL + `/${id}`,
+    url: API.LIST_URL + `/${ids}`,
     method: 'delete',
   });

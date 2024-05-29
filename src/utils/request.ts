@@ -1,8 +1,18 @@
+/*
+ * @Author: YourName
+ * @Date: 2024-05-10 22:50:23
+ * @LastEditTime: 2024-05-29 11:54:56
+ * @LastEditors: YourName
+ * @Description: 
+ * @FilePath: \video_community_admin\src\utils\request.ts
+ * 版权声明
+ */
 import { useUserStore } from '@/stores/modules/user';
 import config from '@/config';
 import axios from 'axios';
-import { ElMessageBox } from 'element-plus';
-const { tokenTableName, tokenFail } = config;
+import { ElMessage, ElMessageBox } from 'element-plus';
+import { removeToken } from './token';
+const { tokenTableName, tokenFail,successCode } = config;
 
 const request = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
@@ -19,66 +29,48 @@ request.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
-let isRefreshing = false;
 //拦截响应
 request.interceptors.response.use(
   (response: any) => {
-    const {
-      data: { code },
-      status,
-    } = response;
-    // const code = data && data[statusName] ? data[statusName] : status;
-    //token失效处理
-    if (code === tokenFail) {
-      if (isRefreshing) return Promise.reject(response);
-      isRefreshing = true;
-      ElMessageBox.confirm(
-        '您的登录已过期，您可以取消停留在此页面,或确认重新登录',
-        '登录过期',
-        {
-          confirmButtonText: '确认',
-          cancelButtonText: '取消',
-        },
-      )
-        .then(() => {
-          useUserStore().userLogout();
-        })
-        .finally(() => {
-          isRefreshing = false;
-        });
-      return Promise.reject(response);
+    const code = response.data.code;
+    if (!successCode.includes(code)) {
+      ElMessage({
+        message: `${response.data.message}`,
+        type: 'error',
+      });
+      return Promise.reject(new Error(response.data.message));
     }
-    // if (code == stateFail){
-    //   console.log("失败");
-    // }
-
     return response.data;
   },
   (error: any) => {
-    //处理错误
-    let message = '';
-    const status = error.response.status;
-    switch (status) {
-      case '401':
-        message = 'TOKEN过期';
-        break;
-      case '403':
-        message = '无权访问';
-        break;
-      case '404':
-        message = '请求地址出错';
-        break;
-      case '500':
-        message = '服务器出错';
-        break;
-      default:
-        message = '网络问题';
-        break;
-    }
-
-    //返回错误信息
-    Promise.reject(error);
-  },
+      //处理错误
+      let message = '';
+      const status = error.response.status;
+      switch (status) {
+        case 401:
+          message = 'TOKEN过期';
+          removeToken();
+          break;
+        case 403:
+          message = '无权访问';
+          break;
+        case 404:
+          message = '请求地址出错';
+          break;
+        case 500:
+          message = '服务器出错';
+          break;
+        default:
+          message = '网络问题';
+          break;
+      }
+      ElMessage({
+        message,
+        type: 'error',
+      });
+  
+      Promise.reject(error);
+    },
 );
 
 export default request;

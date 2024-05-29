@@ -48,8 +48,8 @@ const state = reactive({
 })
 
 const form = reactive<loginForm>({
-  username: 'admin12',
-  password: '123456'
+  username: 'admin',
+  password: '132066'
 });
 
 // 校验

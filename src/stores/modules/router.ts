@@ -22,8 +22,6 @@ export const useRouterStore = defineStore('router', () => {
           ? (route.component = () => import('@/layout/index.vue'))
           : (route.component = modules[`/src/${route.component}/index.vue`]);
       }
-
-      
       if (route.children) convertRouter(route.children);
     });
   };
